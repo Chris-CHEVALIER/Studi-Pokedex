@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
         integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous">
     </script>
-    <title>Pokédex Studi</title>
+    <title>Pokédex Studi - Créer un Pokémon</title>
 </head>
 
 <body>
@@ -44,23 +44,28 @@
     <?php 
         require("./PokemonsManager.php");
         $manager = new PokemonsManager();
-        $pokemons = $manager->getAll();
     ?>
 
     <main class="container">
-        <section class="d-flex flex-wrap justify-content-center">
-            <?php foreach ($pokemons as $pokemon): ?>
-                <div class="card m-5" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="<?= $pokemon->getName() ?>">
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $pokemon->getNumber() ?># <?= $pokemon->getName() ?></h5>
-                        <p class="card-text"><?= $pokemon->getDescription() ?></p>
-                        <a href="#" class="btn btn-warning">Modifier</a>
-                    </div>
-                </div>
-            <?php endforeach ?>
-        </section>
-        <a href="./create.php" class="btn btn-success">Créer un Pokémon</a>
+        <form method="post" enctype="multipart/form-data">
+            <label for="number" class="form-label">Numéro</label>
+            <input type="number" name="number" placeholder="Le numéro du Pokémon" id="number" class="form-control" min=1 max=901>
+            <label for="name" class="form-label">Nom</label>
+            <input type="text" name="name" placeholder="Le nom du Pokémon" id="name" class="form-control" minlength="3" maxlength="40">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" class="form-control" rows="6" placeholder="La description du Pokémon" minlength="10" maxlength="200"></textarea>
+            <label for="type1" class="form-label">Type</label>
+            <!--
+            <select name="type1" id="type1" class="form-select">
+                <option value=""></option>
+            </select>
+            -->
+            <br/>
+            <label for="image" class="form-label">Image</label>
+            <input type="file" name="image" id="image" class="form-control">
+
+            <input type="submit" class="btn btn-success mt-3" value="Créer">
+        </form>
     </main>
 </body>
 

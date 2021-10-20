@@ -1,5 +1,7 @@
 <?php
 
+require("./Pokemon.php");
+
 class PokemonsManager {
     private $db;
 
@@ -16,10 +18,10 @@ class PokemonsManager {
     }
 
     public function create(Pokemon $pokemon) {
-        $req = $this->db->prepare("INSERT INTO `pokemon` (numero, nom, description, type1, type2) VALUE (:numero, :nom, :description, :type1, :type2)");
+        $req = $this->db->prepare("INSERT INTO `pokemon` (number, name, description, type1, type2) VALUE (:number, :name, :description, :type1, :type2)");
 
-        $req->bindValue(":numero", $pokemon->getNumero(), PDO::PARAM_INT);
-        $req->bindValue(":nom", $pokemon->getNom(), PDO::PARAM_STR);
+        $req->bindValue(":number", $pokemon->getnumber(), PDO::PARAM_INT);
+        $req->bindValue(":name", $pokemon->getName(), PDO::PARAM_STR);
         $req->bindValue(":description", $pokemon->getDescription(), PDO::PARAM_STR);
         $req->bindValue(":type1", $pokemon->getType1(), PDO::PARAM_INT);
         $req->bindValue(":type2", $pokemon->getType2(), PDO::PARAM_INT);
@@ -37,18 +39,19 @@ class PokemonsManager {
 
     public function getAll(): array {
         $pokemons = [];
-        $req = $this->db->query("SELECT * FROM `pokemon` ORDER BY numero");
+        $req = $this->db->query("SELECT * FROM `pokemon` ORDER BY number");
         $datas = $req->fetchAll();
         foreach ($datas as $data) {
             $pokemon = new Pokemon($data);
             $pokemons[] = $pokemon;
         }
+        $req->closeCursor();
         return $pokemons;
     }
 
     public function getAllByString(string $input) {
         $pokemons = [];
-        $req = $this->db->prepare("SELECT * FROM `pokemon` WHERE name LIKE :input ORDER BY numero");
+        $req = $this->db->prepare("SELECT * FROM `pokemon` WHERE name LIKE :input ORDER BY number");
         $req->bindValue(":input", $input, PDO::PARAM_STR);
         $datas = $req->fetchAll();
         foreach ($datas as $data) {
@@ -62,13 +65,32 @@ class PokemonsManager {
         /*if ($input instanceof Type) {
             # code...
         }*/
+        $pokemons = [];
+        $req = $this->db->prepare("SELECT * FROM `pokemon` WHERE type1 LIKE :input OR type2 LIKE :input ORDER BY number");
+        $req->bindValue(":input", $input, PDO::PARAM_STR);
+        $datas = $req->fetchAll();
+        foreach ($datas as $data) {
+            $pokemon = new Pokemon($data);
+            $pokemons[] = $pokemon;
+        }
+        return $pokemons;
     }
 
-    public function update($pokemon) {
-        # code...
+    public function update(Pokemon $pokemon) {
+        $req = $this->db->prepare("UPDATE `pokemon` SET number = :number, name = :name, description = :description, type1 = :type1, type2 = :type2");
+
+        $req->bindValue(":number", $pokemon->getNumber(), PDO::PARAM_INT);
+        $req->bindValue(":name", $pokemon->getName(), PDO::PARAM_STR);
+        $req->bindValue(":description", $pokemon->getDescription(), PDO::PARAM_STR);
+        $req->bindValue(":type1", $pokemon->getType1(), PDO::PARAM_INT);
+        $req->bindValue(":type2", $pokemon->getType2(), PDO::PARAM_INT);
+
+        $req->execute();
     }
 
     public function delete(int $id) {
-        # code...
+        $req = $this->db->prepare("DELETE FROM `pokemon` WHERE id = :id");
+        $req->bindValue(":id", $id, PDO::PARAM_INT);
+        $req->execute();
     }
 }

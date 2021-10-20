@@ -2,16 +2,16 @@
 
 class Pokemon {
     private $id;
-    private $numero;
-    private $nom;
+    private $number;
+    private $name;
     private $description;
     private $type1;
     private $type2;
 
     /* $data = [
         "id" => 1,
-        "numero" => 1,
-        "nom" => "Bulbizarre",
+        "number" => 1,
+        "name" => "Bulbizarre",
         // ...
     ]*/
     
@@ -44,40 +44,40 @@ class Pokemon {
     }
 
     /**
-     * Get the value of numero
+     * Get the value of number
      */ 
-    public function getNumero(): int {
-        return $this->numero;
+    public function getNumber(): int {
+        return $this->number;
     }
 
     /**
-     * Set the value of numero
+     * Set the value of number
      *
      * @return  self
      */ 
-    public function setNumero($numero) {
-        if (is_int($numero) < 800) {
-            $this->numero = $numero;
+    public function setNumber($number) {
+        if (is_int($number) < 800) {
+            $this->number = $number;
         }
         return $this;
     }
 
     /**
-     * Get the value of nom
+     * Get the value of name
      */ 
-    public function getNom()
+    public function getName()
     {
-        return $this->nom;
+        return $this->name;
     }
 
     /**
-     * Set the value of nom
+     * Set the value of name
      *
      * @return  self
      */ 
-    public function setNom($nom)
+    public function setName($name)
     {
-        $this->nom = $nom;
+        $this->name = $name;
         return $this;
     }
 
