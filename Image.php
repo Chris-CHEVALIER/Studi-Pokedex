@@ -1,11 +1,9 @@
 <?php
 
-class Type {
+class Image {
     private $id;
     private $name;
-    private $color;
-
-    // $type = new Type(["id" => 1, "name" => "Electrik", "color" => "yellow"])
+    private $path;
 
     public function __construct(array $data) {
         $this->hydrate($data);
@@ -53,7 +51,7 @@ class Type {
      *
      * @return  self
      */ 
-    public function setName(string $name)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -61,21 +59,21 @@ class Type {
     }
 
     /**
-     * Get the value of color
+     * Get the value of path
      */ 
-    public function getColor()
+    public function getPath()
     {
-        return $this->color;
+        return $this->path;
     }
 
     /**
-     * Set the value of color
+     * Set the value of path
      *
      * @return  self
      */ 
-    public function setColor($color)
+    public function setPath($path)
     {
-        $this->color = $color;
+        $this->path = $path;
 
         return $this;
     }

@@ -7,6 +7,7 @@ class Pokemon {
     private $description;
     private $type1;
     private $type2;
+    private $image;
 
     /* $data = [
         "id" => 1,
@@ -132,6 +133,26 @@ class Pokemon {
      */ 
     public function setType2($type2) {
         $this->type2 = $type2;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of image
+     */ 
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set the value of image
+     *
+     * @return  self
+     */ 
+    public function setImage($image)
+    {
+        $this->image = $image;
 
         return $this;
     }

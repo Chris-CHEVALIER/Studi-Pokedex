@@ -43,7 +43,26 @@
 
     <?php 
         require("./PokemonsManager.php");
-        $manager = new PokemonsManager();
+        require("./TypesManager.php");
+        require("./ImagesManager.php");
+        $pokemonManager = new PokemonsManager();
+
+        $typeManager = new TypesManager();
+        $types = $typeManager->getAll();
+
+        if ($_POST) {
+            $number = $_POST["number"];
+            $name = $_POST["name"];
+            $description = $_POST["description"];
+            $idType1 = $_POST["type1"];
+            $idType2 = $_POST["type2"];
+            var_dump($_FILES);
+
+            if ($_FILES["image"]["size"] < 2000000) {
+                $imagesManager = new ImagesManager();
+                //$pdo = Data
+            }
+        }
     ?>
 
     <main class="container">
@@ -54,12 +73,24 @@
             <input type="text" name="name" placeholder="Le nom du Pokémon" id="name" class="form-control" minlength="3" maxlength="40">
             <label for="description" class="form-label">Description</label>
             <textarea name="description" id="description" class="form-control" rows="6" placeholder="La description du Pokémon" minlength="10" maxlength="200"></textarea>
-            <label for="type1" class="form-label">Type</label>
-            <!--
+            <label for="type1" class="form-label">Type 1</label>
+            
             <select name="type1" id="type1" class="form-select">
-                <option value=""></option>
+                <option value="">--</option>
+                <?php foreach ($types as $type): ?>
+                    <option value="<?= $type->getId() ?>"><?= $type->getName() ?></option>
+                <?php endforeach ?>
             </select>
-            -->
+
+            <label for="type2" class="form-label">Type 2</label>
+            
+            <select name="type2" id="type2" class="form-select">
+                <option value="">--</option>
+                <?php foreach ($types as $type): ?>
+                    <option value="<?= $type->getId() ?>"><?= $type->getName() ?></option>
+                <?php endforeach ?>
+            </select>
+            
             <br/>
             <label for="image" class="form-label">Image</label>
             <input type="file" name="image" id="image" class="form-control">
