@@ -11,7 +11,7 @@ class Image {
 
     public function hydrate(array $data): void {
         foreach ($data as $key => $value) {
-            $method = "set" . ucfirst($key); // setId, setName, setColor
+            $method = "set" . ucfirst($key); // setId, setName, setPath
             if (method_exists($this, $method)) {
                 $this->$method($value);
             }
