@@ -28,7 +28,7 @@ class ImagesManager {
 
     public function get(int $id) {
         $req = $this->db->prepare("SELECT * FROM `image` WHERE id = :id");
-        $req->bindValue(":id", $id, PDO::PARAM_INT);
+        $req->execute([":id" => $id]);
         $data = $req->fetch();
         $image = new Image($data);
         return $image;
